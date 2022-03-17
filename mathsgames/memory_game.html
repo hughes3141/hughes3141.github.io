@@ -1,0 +1,383 @@
+<html>
+
+
+<head>
+
+<style>
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  
+  background-color: #2196F3;
+  padding: 10px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  /*padding: 20px;*/
+  font-size: 30px;
+  text-align: center;
+  height: 200px;
+  margin: 10px;
+  
+  }
+ 
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+
+.float-container {
+	/*
+    border: 3px solid black;
+	*/
+    padding: 0px;
+	overflow: hidden;
+	margin: auto;
+	
+	
+
+}
+
+.float-child {
+	
+    float: left;
+    padding: 0px;
+	/*
+    border: 2px solid red;
+	*/
+	width:45%;
+	
+	}
+	
+
+  
+  .grid-container_2 {
+  display: grid;
+  grid-template-columns: auto auto ;
+  /*background-color: #2196F3;*/
+  padding: 0px;
+   height: 100%;
+  }
+  
+  .grid-item_2 {
+  background-color: rgba(255, 255, 255, 0.8);
+
+  padding: 0px;
+  font-size: 0px;
+  text-align: center;
+  
+  }
+
+.dot {
+
+height: 25px;
+  width: 25px;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 5px;
+
+}
+
+
+.col_1 {
+	float: left;
+	width: 48%;}
+
+.col_2 {
+	float: right;
+	width: 48%;
+	border-left: 1px solid black;}
+
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Maths Memory Game</h1>
+<h2>Instructions:</h2>
+<p>Click on the cards to reveal the numbers beneath.</p>
+<p>Two cards with the same number is a match!</p>
+
+<p>
+
+<button onclick ="myFunction()" style = "width: 100%; font-size: 20px;">Click to Reset</button>
+</p>
+<div class="grid-container" id="grid" onclick ="myClear()">
+
+
+ 
+
+</div>
+
+
+
+
+<script>
+
+var choices = [ [2,2],[1,3],[3,2],[4,1], [3,3], [2,4], [5,2], [4,3], [5,3], [2,6], [5,4], [3,6]];
+
+var images = [];
+root ="images/";
+
+var key = [0,0,1,1,2,2,3,3,4,4,5,5]
+
+order_g = [];
+
+flip_card = "";
+
+function myFunction() {
+var order = [];
+var tries = [];
+
+
+	var i;
+	for (i=0; i<choices.length; i++) {
+		var k = 0;
+		var l = false;
+		while (l==false) {
+			var j= Math.floor(Math.random()*choices.length);
+			if (order.includes(j)== false) {order[i]=j; l=true;};
+			k++;
+		}
+		tries [i] = k;
+	}
+
+
+order_g = order;
+
+
+	var grid_items = document.getElementsByClassName("grid-item")
+	var i;
+	for (i=0; i<grid_items.length; i) {
+	grid_items[i].remove();
+	}
+
+	var i;
+	for (i=0; i<choices.length; i++) {
+	
+		var grid = document.getElementById("grid");
+		var cell = document.createElement("div");
+		cell.className = "grid-item noselect";
+		cell.setAttribute("id", "grid"+i);
+		
+		
+		var floatcontainer = document.createElement("div");
+		floatcontainer.setAttribute("class", "float-container");
+		floatcontainer.setAttribute("id", "numblock"+i);
+		floatcontainer.style.display ="none";
+		
+		var floatchild_1 = document.createElement("div");
+		floatchild_1.setAttribute("class", "float-child col_1");
+		
+		var floatchild_2 = document.createElement("div");
+		floatchild_1.setAttribute("class", "float-child col_2");
+		
+		
+		var gridcontainer = document.createElement("div");
+		gridcontainer.setAttribute("class", "grid-container_2");
+		
+		var j;
+		for (j=0; j<choices[order_g[i]][0]; j++) {
+				var dot = document.createElement("div");
+				dot.setAttribute("class", "grid-item_2 dot");
+				gridcontainer.appendChild(dot);
+				}
+				
+		floatchild_1.appendChild(gridcontainer);
+		
+		var gridcontainer = document.createElement("div");
+		gridcontainer.setAttribute("class", "grid-container_2");
+		
+		var j;
+		for (j=0; j<choices[order_g[i]][1]; j++) {
+				var dot = document.createElement("div");
+				dot.setAttribute("class", "grid-item_2 dot");
+				gridcontainer.appendChild(dot);
+				}
+		
+		floatchild_2.appendChild(gridcontainer);
+		
+		floatcontainer.appendChild(floatchild_1);
+		floatcontainer.appendChild(floatchild_2);
+		cell.appendChild(floatcontainer);
+				
+				
+		
+		
+		cell.setAttribute("onclick", "compareCard("+i+")");
+		/*cell.innerHTML = flip_card;*/
+		
+		
+		
+		grid.appendChild(cell);
+	}
+ 
+
+
+}
+
+function flipCard(i) {
+	var card = document.getElementById("grid"+i);
+	var numblock = document.getElementById("numblock"+i);
+	numblock.style.display = "inline";
+	/*card.innerHTML = choices[order_g[i]];*/
+	card.style.backgroundColor ="yellow";
+	
+	
+	/*
+	if (images[order_g[i]] !== "") {
+		var img = document.createElement("img");
+		img.src = root+images[order_g[i]];
+		img.style.width = "90%";
+		img.style.height = "90%";
+		img.style.display = "inline-block";
+		card.appendChild(img);
+		}
+		
+		*/
+	
+}
+
+var compare = [];
+var click_order = [];
+var count = 0;
+var clear_rec = [];
+
+
+
+function compareCard(i) {
+
+
+
+flipCard(i);
+
+
+click_order.push(i);
+var a = click_order.slice(0, click_order.length-1);
+var b = click_order.slice(click_order.length-2);
+
+
+
+
+
+if (a.includes(i)==false) {
+		compare.push(key[[order_g[i]]]);		
+		}
+
+
+		
+		if ((compare[0] == compare[1])) {
+					
+					var j;
+					for(j=0; j<click_order.length; j++) {
+							document.getElementById("grid"+click_order[j]).style.backgroundColor ="pink";
+							document.getElementById("grid"+click_order[j]).setAttribute("onclick", "")
+							}
+					document.getElementById("grid"+click_order[j])
+					/* clear_rec.push(true); */
+					compare = [];
+					click_order = [];
+					}
+					
+					
+					else {
+					
+					if (compare.length >=2) {
+							clear_rec.push(false);
+							
+							}
+					
+					} 
+					
+	
+					
+		/*
+		if ((compare.length==2)&&(b.includes(i)==true))
+					
+					
+					
+					}
+		*/
+		
+		/*
+		if ((compare.length == 3)) {
+					
+					var j;
+					for(j=0; j<click_order.length; j++) {
+							document.getElementById("grid"+click_order[j]).innerHTML = "Flip Card";
+							}
+					compare = [];
+					click_order = [];
+					count ++;
+					clear_rec = [];
+					
+					}
+		*/
+
+
+
+
+	console.clear();
+
+	console.log("click order: "+click_order);
+	console.log("compare: "+compare);
+	console.log(clear_rec);
+	console.log(clear_rec[clear_rec.length-2]);
+	console.log(count);
+	
+	
+	
+	
+
+
+
+	
+
+
+}
+
+function myClear() {
+
+
+
+if (clear_rec[clear_rec.length-2] == false) {
+					
+					var j;
+					for(j=0; j<click_order.length; j++) {
+							document.getElementById("numblock"+click_order[j]).style.display = "none";
+							document.getElementById("grid"+click_order[j]).style.backgroundColor="rgba(255, 255, 255, 0.8)";
+							}
+							
+							
+					compare = [];
+					click_order = [];
+					count ++;
+					clear_rec = [];
+					
+					
+					
+					
+					}
+
+
+}
+
+
+</script>
+
+</body>
+
+</html>

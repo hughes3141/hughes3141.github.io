@@ -1,0 +1,245 @@
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+#number {
+
+	font-size: 100px;
+	width: 50%;
+  margin: 5px auto;
+  text-align: center;
+}
+
+p {
+	font-size: 30px;
+
+}
+
+
+.times_table_div {
+
+	border: solid 1px black;
+	float: left;
+	width: 50px;
+	margin: 0 10%;
+	text-align: center;
+	height: 16px;
+
+}
+
+.correct {
+
+	background-color: green;
+
+}
+
+.incorrect {
+
+	background-color: red;
+
+}
+
+
+.factor_span {
+
+	display: none;
+
+}
+
+.correct_factor {
+
+	display: block;
+	
+}
+
+.buttons {
+
+	margin: 5 auto;
+	display: block;
+	width: 50%;
+	height: 5%;
+
+
+}
+
+#numberGen {
+margin: 5 auto;
+	display: block;
+	width: 50%;
+
+}
+
+#wellDone {
+
+	display: none;
+
+	position: ;
+
+	background-color: pink;
+	border: 1px solid green;
+	
+	
+	
+	
+	padding: 5;
+	
+
+
+
+}
+
+</style>
+
+</head>
+
+<body onload ="numberGenerate()">
+
+<h1>Splitting Numbers into their Times Tables</h1>
+
+
+
+<p>Press the button to get a number:</p> <button id="numberGen" onclick = "numberGenerate(), reset()">Press Me Please</button>
+<div id="number">20</div>
+<div id="times_tables"></div>
+
+<p style="clear: both">Split up the number into the times tables, okay? Good. Let's get going.</p>
+
+
+<div id="button_field"></div>
+
+<div id="wellDone">
+<h1>Well Done!!!</h1>
+<p>You've done a great job</p>
+<p>Want to play again?</p>
+<p>Press the button to get a number:</p> <button onclick = "numberGenerate(), reset()">Press Me Please</button>
+</div>
+
+<script>
+
+var button_field = document.getElementById("button_field");
+
+for (var i=1; i<11; i++) {
+
+	var button = document.createElement("button");
+	button.innerHTML = i+"'s";
+	button.setAttribute("id", "button_"+i);
+	button.setAttribute("class", "buttons");
+	button.setAttribute("onclick", "checkAnswer("+i+")");
+	
+	button_field.appendChild(button);
+
+
+}
+
+var factors = [];
+var answers = [];
+
+function checkAnswer(i) {
+
+	
+	var button = document.getElementById("button_"+i);
+	
+	if (factors.includes(i)== true) {
+		
+		button.classList.add("correct")
+		document.getElementById("factor_"+i).classList.add("correct_factor");
+		
+		if (answers.includes(i)== false) {answers.push(i)}
+		
+		}
+	else {button.classList.add("incorrect")};
+
+
+if (answers.length == factors.length) {
+
+	document.getElementById("wellDone").style.display="block";
+	document.getElementById("number").style.background="pink";
+	//document.body.style.background ="pink";
+	}
+
+console.log(answers)
+
+}
+
+function numberGenerate() {
+
+	console.clear();
+	
+	var buttons = document.getElementsByClassName("buttons");
+	
+	for (var i=0; i<buttons.length; i++) {
+	
+		buttons[i].setAttribute("class", "buttons")
+	}
+
+	factors.length = 0;
+	answers.length = 0;
+
+	
+	var number1 = 10 - Math.floor(Math.random() * 10);
+	
+	var number2 = 10 - Math.floor(Math.random() * 10);
+	
+	var number = number1*number2;
+	
+
+	
+	document.getElementById("number").innerHTML = number;
+	
+	
+	for (var i=1; i<11; i++) {
+	
+		var factor = number/i;
+		
+		if (Number.isInteger(factor)==true) {factors.push(i)};
+	
+	}
+	
+	var div = document.getElementById("times_tables");
+	div.innerHTML = "";
+	
+	for (var i=0; i<factors.length; i++) {
+	
+		
+		var div2 = document.createElement("div");
+		div2.setAttribute("class", "times_table_div")
+		div2.innerHTML="<span class ='factor_span' id='factor_"+factors[i]+"'>"+factors[i]+"</span>";
+		
+		div2.style.margin = "0 "+(100/factors.length)*.24+"%";
+		div2.style.width = (100/factors.length)*.45+"%";
+		
+		var br = document.createElement("br");
+		
+		div.appendChild(div2);
+		//div.appendChild(br);
+	
+	
+	
+	}
+	
+	
+
+console.log(factors)
+
+
+}
+
+function reset() {
+	
+	document.getElementById("wellDone").style.display="none";
+	document.getElementById("number").style.background="transparent";
+
+}
+
+
+</script>
+
+</body>
+
+
+
+</html>

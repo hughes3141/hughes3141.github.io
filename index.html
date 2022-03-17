@@ -23,185 +23,30 @@
 
 <body class ="leading-normal tracking-normal gradient">
 
+<div class="w-full border-black border-solid border rounded flex">
+  <svg class="h-6 my-auto fill-current inline content-center" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>@keyframes check {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }</style>
+    <rect width="16" height="16" x="4" y="4" stroke="#0A0A30" stroke-width="1.5" rx="2.075"></rect>
+    <path stroke="#7dd3fc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.5 15l2.658-4.5 3.158 3.5L16.5 9" style="animation:check 2s infinite cubic-bezier(.99,-.1,.01,1.02)" stroke-dashoffset="100" stroke-dasharray="100"></path>
+  </svg>
+  <div class="text-2xl font-mono inline my-auto ">hughes3141</div>
+</div>
 
-
-<!-- This is an example component -->
-<div
-    class="bg-grayDark"
-    x-data="{ atTop: true }"
-    x-on:scroll.window="atTop =( window.pageYOffset > 10) ? false : true "
-     >
-    <!-- Navbar -->
-    <div
-      class="w-full text-gray-700 bg-white h-16 fixed top-0 animated z-40"
-      x-bind:class='{ "bg-black shadow-lg": !atTop }'
-    >
-      <div
-        x-data="{ open: false }"
-        class="flex flex-col max-w-screen-xl px-2 mx-auto md:items-center md:justify-between md:flex-row"
-      >
-        <div class="p-4 flex flex-row items-center justify-between">
-          <a
-            href="home.html"
-            class="tracking-widest rounded-lg focus:outline-none focus:shadow-outline"
-          >
-            <svg class="h-8 fill-current inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>@keyframes check {
-              to {
-                stroke-dashoffset: 0;
-              }
-            }</style>
-              <rect width="16" height="16" x="4" y="4" stroke="#0A0A30" stroke-width="1.5" rx="2.075"></rect>
-              <path stroke="#7dd3fc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.5 15l2.658-4.5 3.158 3.5L16.5 9" style="animation:check 2s infinite cubic-bezier(.99,-.1,.01,1.02)" stroke-dashoffset="100" stroke-dasharray="100"></path>
-            </svg>
-            <div class="text-2xl font-mono inline my-auto ">hughes3141</div>
-            
-          </a>
-          <!-- Button Mobile Nav -->
-          <button
-            class="md:hidden rounded-lg focus:outline-none focus:shadow-outline"
-            @click="open = !open"
-          >
-            <span class="text-lg text-primary"
-              ><i class="fas fa-bell"></i
-            ></span>
-          </button>
-          <!-- End Button Mobile Nav -->
-        </div>
-        <!-- Navbar Mobile -->
-        <nav
-          :class="{'flex': open, 'hidden': !open}"
-          class="flex-col flex-grow pb-4 hidden bg-white shadow-lg rounded-b"
-        >
-          <a
-            class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="#"
-            >Notifikasi 1</a
-          >
-          <a
-          class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#"
-          >Notifikasi 1</a
-        >
-        <a
-        class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-        href="#"
-        >Notifikasi 1</a
-      >
-      <a
-      class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-      href="#"
-      >Notifikasi 1</a
-    >
-        </nav>
-        <!-- End Navbar Mobile -->
-        <nav
-          class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex md:justify-end md:flex-row bg-white"
-        >
-          <a
-            class="flex items-center px-3 py-1 mt-2 text-lg font-semibold text-primary rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="#"
-          >
-            <i class="fas fa-envelope"></i>
-          </a>
-          <div
-            @click.away="open = false"
-            class="relative"
-            x-data="{ open: false }"
-          >
-            <button
-              @click="open = !open"
-              class="flex flex-row items-center w-full px-3 py-1 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg md:w-auto md:mt-0 md:ml-2 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            >
-              <span class="text-lg text-primary"
-                ><i class="fas fa-bell"></i
-              ></span>
-            </button>
-            <div
-              x-show="open"
-              x-transition:enter="transition ease-out duration-100"
-              x-transition:enter-start="transform opacity-0 scale-95"
-              x-transition:enter-end="transform opacity-100 scale-100"
-              x-transition:leave="transition ease-in duration-75"
-              x-transition:leave-start="transform opacity-100 scale-100"
-              x-transition:leave-end="transform opacity-0 scale-95"
-              class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48"
-            >
-              <div class="px-2 py-2 bg-white rounded-md shadow">
-                <a
-                  class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  href="#"
-                  >Notifikasi 1</a
-                >
-                <a
-                  class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  href="#"
-                  >Notifikasi #2</a
-                >
-                <a
-                  class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  href="#"
-                  >Notifikasi #3</a
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            @click.away="open = false"
-            class="relative"
-            x-data="{ open: false }"
-          >
-            <button
-              @click="open = !open"
-              class="flex flex-row items-center w-full px-1 py-1 mt-2 text-sm font-semibold text-left bg-transparent rounded-full md:w-auto md:mt-0 md:ml-2 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            >
-              <img src="files/IMG_E6317.JPG" class="w-auto h-6 rounded-full" alt="" />
-            </button>
-            <div
-              x-show="open"
-              x-transition:enter="transition ease-out duration-100"
-              x-transition:enter-start="transform opacity-0 scale-95"
-              x-transition:enter-end="transform opacity-100 scale-100"
-              x-transition:leave="transition ease-in duration-75"
-              x-transition:leave-start="transform opacity-100 scale-100"
-              x-transition:leave-end="transform opacity-0 scale-95"
-              class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48"
-            >
-              <div class="px-2 py-2 bg-white rounded-md shadow">
-                <a
-                  class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  href="#"
-                  >Link 1</a
-                >
-                <a
-                  class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  href="#"
-                  >Link 2</a
-                >
-                <a
-                  class="block px-4 py-2 mt-2  bg-transparent rounded-lg  text-sm font-semibold md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  href="#"
-                  >Link #3</a
-                >
-              </div>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </div>
-    <!-- End Navbar -->
-  <div class="w-full  md:pl-4 lg:pl-10 md:pr-4 flex self-start flex-col mt-20 ">
-    <div class="font-mono w-full rounded overflow-hidden shadow-lg bg-white flex flex-col p-6 md:py-8 lg:py-12 xl:py-16 md:px-8 lg:px-12 xl:px-20">
-      <p>Welcome to my github public page.</p>
-      <p>This is a place where I'm putting a few projects and ideas to share.</p>
-      <p class="text-pink-400">It's clearly a work in progress. Check back for ideas and updates.</p>
-    </div>
+<div class="w-full  md:pl-4 lg:pl-10 md:pr-4 flex self-start flex-col mt-6 ">
+  <div class="font-mono w-full rounded overflow-hidden shadow-lg bg-white flex flex-col p-6 md:py-8 lg:py-12 xl:py-16 md:px-8 lg:px-12 xl:px-20">
+    <p>Welcome to my github public page.</p>
+    <p>This is a place where I'm putting a few projects and ideas to share.</p>
+    <h1 class="text-lg">Projects</h1>
+    <ul>
+      <li><a href="./mathsgames/index.html">Maths Games</a></li>
+    </ul>
   </div>
 </div>
 
-<script
-    src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-    defer
-  ></script>
+
 
 </body>
 </html>
