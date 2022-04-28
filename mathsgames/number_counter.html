@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+
+      th, td {
+        border: 1px solid black;
+        padding: 2px;
+        
+      }
+
+      #main_table {
+        width: 100%;
+      }
+
+      .main_table_column {
+        width: 25%;
+      }
+
+      .bottom_row {
+        border-bottom: 0;
+        border-left: 0;
+        border-right: 0;
+      }
+
+      .counter {
+       
+        margin: 5px;
+    
+      }
+
+      .counter td {
+        //width: 20%;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        width: 100%;
+      }
+
+    
+
+      .counting_div {
+        box-sizing: border-box;
+        border: 1px solid black;
+        
+        margin: auto;
+
+        height: 25px;
+        width: 25px;
+        
+        border-radius: 50%;
+        //display: inline-block;
+      }
+
+      .ones_counter {
+        background-color:aqua;
+      }
+      .ones_digit {
+        color:aqua;
+      }
+
+      .tens_counter {
+        background-color:#7fffd4;
+      }
+      .tens_digit {
+        color:#7fffd4;
+      }
+
+      .hundreds_counter {
+        background-color: darkorange;
+      }
+      .hundreds_digit {
+        color: darkorange;
+      }
+
+      .thousands_counter {
+        background-color: blueviolet;
+      }
+      .thousands_digit {
+        color: blueviolet;
+      }
+
+      .counter_box {
+        width: 20%;
+        height: 30px;
+        padding: 0;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+
+      .left_button {
+        margin-right: 10px;
+      }
+      .right_button {
+        margin-left: 10px;
+      }
+
+      .number_div {
+        margin: auto;
+        font-size: 50px;
+        display:block; text-align:center;
+        font-family: 'Courier New', Courier, monospace;
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+    <h1>Number counter</h1>
+    <table id="main_table">
+      <tr>
+        <th class="main_table_column"><button class="left_button" onclick="changeNumber(-1000)">-</button>Thousands<button class="right_button" onclick  ="changeNumber(1000)">+</button></th>
+        <th class="main_table_column"><button class="left_button" onclick="changeNumber(-100)">-</button>Hundreds<button class="right_button" onclick ="changeNumber(100)">+</button></th>
+        <th class="main_table_column"><button class="left_button" onclick="changeNumber(-10)">-</button>Tens<button class="right_button" onclick  ="changeNumber(10)">+</button></th>
+        <th class="main_table_column"><button class="left_button" onclick="changeNumber(-1)">-</button>Ones<button class="right_button" onclick ="changeNumber(1)">+</button></th>
+        
+      </tr>
+      <tr>
+        <td class="main_table_column">
+          <div id="counter_div_4"></div>
+        </td>
+        <td class="main_table_column">
+          <div id="counter_div_3"></div>
+        </td>
+        <td class="main_table_column">
+          <div id="counter_div_2"></div>
+        </td>
+        <td class="main_table_column">
+          <div id="counter_div_1"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="main_table_column, bottom_row">
+          <span id="number_div_4" class="number_div thousands_digit"></div>
+        </td>
+        <td class="main_table_column, bottom_row">
+          <span id="number_div_3" class="number_div hundreds_digit"></div>
+        </td>
+        <td class="main_table_column, bottom_row">
+          <span id="number_div_2" class="number_div tens_digit"></div>
+        </td>
+        <td class="main_table_column, bottom_row">
+          <span id="number_div_1" class="number_div ones_digit"></div>
+        </td>
+      </tr>
+    </table>
+    
+    <br>
+    <label for="input_number">Number Input: </label>
+    <input type="number" id="input_number" onchange ="updateValue()" value="0"></input>
+    <button onclick="getRandomNumber()">Random Number</button>
+
+  
+    <script>
+
+      //createCounter("experiment");
+
+      for (var i=1; i<5; i++) {
+        createCounter(i);
+
+      }
+
+      updateValue();
+
+   
+
+      function createCounter(digitPlace) {
+        
+        var table = document.createElement("table");
+        table.style.width = "100%";
+        var row0 = table.insertRow(0);
+        var row1 = table.insertRow(1);
+
+        var cells = [[],[]]
+
+        for(var i=0; i<10; i++) {
+          if(i<5) {
+            cells[0][i] = row0.insertCell(i);
+            cells[0][i].id = (digitPlace+"_"+(i+1));
+            cells[0][i].classList.add("counter_box");
+          } else {
+            cells[1][i] = row1.insertCell(i-5);
+            cells[1][i].id = (digitPlace+"_"+(i+1));
+            cells[1][i].classList.add("counter_box");
+          }
+
+          
+          
+        }
+
+        /*
+        
+
+        var container = document.createElement("div");
+        container.classList.add("grid-container");
+        
+        for(var i=0; i<digit; i++) {
+          var item = document.createElement("div");
+          item.innerHTML = "6";
+          item.classList.add("counter_square");
+          container.appendChild(item);
+        }
+        
+        */
+
+
+        var div=document.getElementById("counter_div_"+digitPlace);
+        div.classList.add("counter");
+
+        div.appendChild(table);
+
+      }
+
+      function fillCounters(th, hun, tens, ones) {
+        var counter_squares = document.getElementsByClassName("counter_box");
+        for(var i=0; i<counter_squares.length; i++) {
+          counter_squares[i].innerHTML = "";
+        }
+
+        for(var i=1; i<=ones; i++) {
+          var counter = document.getElementById("1_"+i);
+          var div = document.createElement("div");
+          div.classList.add("counting_div", "ones_counter");
+          counter.appendChild(div);
+        }
+
+        for(var i=1; i<=tens; i++) {
+          var counter = document.getElementById("2_"+i);
+          var div = document.createElement("div");
+          div.classList.add("counting_div", "tens_counter");
+          counter.appendChild(div);
+        }
+
+        for(var i=1; i<=hun; i++) {
+          var counter = document.getElementById("3_"+i);
+          var div = document.createElement("div");
+          div.classList.add("counting_div", "hundreds_counter");
+          counter.appendChild(div);
+        }
+
+        for(var i=1; i<=th; i++) {
+          var counter = document.getElementById("4_"+i);
+          var div = document.createElement("div");
+          div.classList.add("counting_div", "thousands_counter");
+          counter.appendChild(div);
+        }
+
+
+
+
+      }
+
+      function fillNumbers(th, hun, tens, ones) {
+        document.getElementById("number_div_1").innerHTML = ones;
+        if((tens>0)||((hun>0)||(th>0))) {
+          document.getElementById("number_div_2").innerHTML = tens;
+        } else {
+          document.getElementById("number_div_2").innerHTML = "";
+        }
+        if((hun>0)||(th>0)){
+          document.getElementById("number_div_3").innerHTML = hun;
+        } else {
+          document.getElementById("number_div_3").innerHTML = "";
+        }
+        if(th>0) {
+          document.getElementById("number_div_4").innerHTML = th;
+        } else {
+          document.getElementById("number_div_4").innerHTML = "";
+        }
+      }
+
+      var num_separated = [];
+
+      function convertNumber(num) {
+        var ones = num % 10;
+        var tens = Math.floor(num/10) % 10;
+        var huns = Math.floor(num/100) % 10;
+        var thous = Math.floor(num/1000) % 10;
+        num_separated = [thous, huns, tens, ones];
+        //console.log(num_separated);
+
+      }
+
+      function updateValue() {
+        var value = document.getElementById("input_number").value;
+        convertNumber(value);
+        fillCounters(num_separated[0], num_separated[1], num_separated[2], num_separated[3]);
+        fillNumbers(num_separated[0], num_separated[1], num_separated[2], num_separated[3]);
+      }
+
+
+      function changeNumber(change) {
+        console.log(change);
+        var value = document.getElementById("input_number").value;
+        value = parseInt(value);
+        //console.log(value);
+        value = value + change;
+        document.getElementById("input_number").value = value;
+        updateValue();
+      }
+
+      function getRandomNumber() {
+        var random_number = Math.floor(Math.random()*(9999-1+1)+1);
+        document.getElementById("input_number").value = random_number;
+        updateValue();
+      }
+
+    </script>
+
+  </body>
+
+</html>
