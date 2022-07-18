@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+    html {
+      height: 100%;
+    }
+    body {
+      height: 100%;
+    }
+    #keypad {
+      display: grid;  
+      grid-template-columns: auto auto auto;
+      gap: 5pt;
+      height: 50%;
+
+      border: solid 1px red;
+    }
+
+    #question_div {
+      text-align: center;
+      font-size: xxx-large;
+      font-family: 'Courier New', Courier, monospaceq;
+    }
+
+    #answer {
+      box-sizing: border-box;
+      display: inline-block;
+      border: 2px solid magenta;
+      //  margin: 10pt 0;
+      //height: 60px;
+      min-width: 60px;
+    }
+
+    .number_key {
+      display: inline-grid;
+      border: 1px solid black;
+      text-align: center;
+      font-size: xxx-large;
+      font-family: 'Courier New', Courier, monospaceq;
+      //padding: 30px 0 ;
+    }
+
+    .blank_key {
+      border: none;
+    }
+
+    .check_key {
+      grid-column: 1/4;
+      display: none;
+    }
+
+
+
+  </style>
+
+</head>
+
+<body>
+<h1>Times Tables Practice</h1>
+
+<div id="question_div">
+  <span id="num_1">2</span> x <span id="num_2">2</span> = <span id="answer"></span>
+
+</div>
+
+
+
+<div id="keypad">
+  <div class="number_key" onclick="buttonPress('1')">
+    1
+  </div>
+  <div class="number_key" onclick="buttonPress('2')">
+    2
+  </div>
+  <div class="number_key" onclick="buttonPress('3')">
+    3
+  </div>
+  <div class="number_key" onclick="buttonPress('4')">
+    4
+  </div>
+  <div class="number_key" onclick="buttonPress('5')">
+    5
+  </div>
+  <div class="number_key" onclick="buttonPress('6')">
+    6
+  </div>
+  <div class="number_key" onclick="buttonPress('7')">
+    7
+  </div>
+  <div class="number_key" onclick="buttonPress('8')">
+    8
+  </div>
+  <div class="number_key" onclick="buttonPress('9')">
+    9
+  </div>
+  <div class="number_key blank_key">
+    
+  </div>
+  <div class="number_key" onclick="buttonPress('0')">
+    0
+  </div>
+  <div class="number_key blank_key" onclick="backSpace()">
+    &#8678;
+  </div>
+  <div class="number_key check_key">
+    Check
+  </div>
+
+
+</div>
+
+<div>
+  Number Correct: <span id="correct_count">0</span>
+</div>
+
+<script>
+
+var number_key = document.getElementsByClassName("number_key");
+var width = number_key[0].offsetWidth;
+var height = number_key[0].offsetHeight;
+console.log(width +" "+height);
+
+var questions = [];
+var correct_answer;
+var correct_count = 0;
+
+for (var i=0; i<13; i++) {
+  for (var j=0; j<13; j++) {
+    var iteration = [i, j];
+    questions.push(iteration);
+  }
+}
+
+//console.log(questions);
+
+function setup(){
+  var rand = Math.floor(Math.random()*questions.length);
+
+  var num_1 = document.getElementById("num_1");
+  var num_2 = document.getElementById("num_2");
+  
+  num_1.innerHTML = questions[rand][0];
+  num_2.innerHTML = questions[rand][1];
+  document.getElementById("answer").innerHTML = "";
+  answer = "";
+  correct_answer = questions[rand][0]*questions[rand][1];
+
+  //console.log(questions[rand]);
+  
+
+  questions.splice(rand,1);
+
+
+
+
+  
+}
+
+setup();
+
+
+console.log(correct_answer);
+console.log(questions);
+
+
+
+for (var i=0; i<number_key.length; i++) {
+  //number_key[i].style.height = width+"px";
+}
+
+var answer = "";
+
+function updateAnswer(num){
+  var answer_box = document.getElementById("answer");
+  answer_box.innerHTML = num;
+  checkAnswer();
+}
+
+function buttonPress(num) {
+  answer = answer + num;
+  console.log(answer);
+  updateAnswer(answer);
+}
+
+function backSpace() {
+  //answer.slice(0,-1);
+  answer = answer.substring(0, answer.length -1);
+  console.log(answer);
+  updateAnswer(answer);
+}
+
+function correctCountUpdate() {
+  document.getElementById("correct_count").innerHTML = correct_count;
+}
+
+function checkAnswer() {
+  var answer_submit = parseInt(document.getElementById("answer").innerHTML);
+  if (answer_submit === correct_answer) {
+    correct_count++;
+    correctCountUpdate();
+    setup();
+
+  }
+
+}
+
+</script>
+
+</body>
+
+</html>
