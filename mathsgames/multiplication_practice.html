@@ -17,24 +17,50 @@
       display: grid;  
       grid-template-columns: auto auto auto;
       gap: 5pt;
-      height: 50%;
+      //height: 50%;
 
       border: solid 1px red;
+
+      //position: relative;
+      //top: 10%
+    }
+
+    #correct_flash {
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      width: 80%;
+      height: 30%;
+      transform: translate(-50%, 0);
+      border: 2pt solid green;
+      background-color: aqua;
+
+      text-align: center;
+      font-size: x-large;
+      font-family: 'Courier New', Courier, monospaceq;
+
+      z-index: 1;
+
+      display: none;
+
     }
 
     #question_div {
+      position: relative;
       text-align: center;
       font-size: xxx-large;
       font-family: 'Courier New', Courier, monospaceq;
     }
 
     #answer {
-      box-sizing: border-box;
+ 
       display: inline-block;
-      border: 2px solid magenta;
+      //border: 2px solid magenta;
       //  margin: 10pt 0;
-      //height: 60px;
       min-width: 60px;
+      //height: 60px;
+      width: 60px;
+      
     }
 
     .number_key {
@@ -63,6 +89,10 @@
 
 <body>
 <h1>Times Tables Practice</h1>
+
+<div id="correct_flash">
+  Correct!!!
+</div>
 
 <div id="question_div">
   <span id="num_1">2</span> x <span id="num_2">2</span> = <span id="answer"></span>
@@ -105,7 +135,7 @@
   <div class="number_key" onclick="buttonPress('0')">
     0
   </div>
-  <div class="number_key blank_key" onclick="backSpace()">
+  <div class="number_key " onclick="backSpace()">
     &#8678;
   </div>
   <div class="number_key check_key">
@@ -204,10 +234,20 @@ function checkAnswer() {
   if (answer_submit === correct_answer) {
     correct_count++;
     correctCountUpdate();
-    setup();
+    correctFlash();
+    
 
   }
 
+}
+
+function correctFlash() {
+  var correct_flash = document.getElementById("correct_flash");
+  correct_flash.style.display = "block";
+  setTimeout(function() {
+      correct_flash.style.display = "none";
+      setup();
+    } , 500)
 }
 
 </script>
